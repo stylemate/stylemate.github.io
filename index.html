@@ -4,10 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ORMEE</title>
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script type="text/javascript" src="./js/zdog.dist.min.js"></script>
+    <script type="text/javascript" src="./js/zfont.min.js"></script>
   </head>
   <body>
-    <canvas id="bkg-gradient"></canvas>
+    <canvas id="zdog-canvas"></canvas>
+    <script>
+      Zfont.init(Zdog);
+
+      let illo = new Zdog.Illustration({
+        element: "#zdog-canvas",
+        dragRotate: true,
+        resize: "fullscreen",
+        zoom: 1
+      });
+
+      let myFont = new Zdog.Font({
+        src: "./fonts/JosefinSans-Light.ttf"
+      });
+
+      var text = new Zdog.Text({
+        addTo: illo,
+        font: myFont,
+        value: "Hello World!",
+        textAlign: "center",
+        textBaseline: "middle",
+        fontSize: 128,
+        color: "#000",
+        fill: true
+      });
+
+      var shadow = text.copy({
+        addTo: illo,
+        translate: { x: 2, y: 2, z: -1 },
+        color: "#777"
+      });
+
+      function animate() {
+        illo.updateRenderGraph();
+        requestAnimationFrame(animate);
+      }
+      animate();
+    </script>
+    <!--<canvas id="bkg-gradient"></canvas>
 
     <div id="center-text">
       <canvas id="center-text-canvas" data-tilt data-tilt-full-page-listening data-tilt-reverse="true"></canvas>
@@ -16,5 +56,6 @@
     <script type="text/javascript" src="js/granim.min.js"></script>
     <script type="text/javascript" src="js/vanilla-tilt.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+  //-->
   </body>
 </html>
