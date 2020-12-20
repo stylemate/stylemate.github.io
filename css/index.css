@@ -35,6 +35,11 @@
   height: 100%;
 }
 
+@font-face {
+  font-family: 'custom';
+  src: url('../fonts/JosefinSans-Light.ttf')
+}
+
 .section {
   display: flex;
   align-items: center;
@@ -42,5 +47,6 @@
 }
 
 .section > div > h1 {
-  font-size: small;
+  font-size: 10rem;
+  font-family: custom;
 }
