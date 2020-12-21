@@ -1,5 +1,12 @@
+/**
+ * Full page
+ */
 (function () {
   "use strict";
+
+  /**
+   * Full scroll main function
+   */
   var fullScroll = function (params) {
     /**
      * Main div
@@ -29,7 +36,26 @@
       dotsPosition: params.dotsPosition || "left"
     };
 
+    var numberToId = {
+      0: "first-section",
+      1: "second-section",
+      2: "third-section",
+      3: "fourth-section",
+      4: "fifth-section"
+    };
+
+    var idToNumber = {
+      "first-section": 0,
+      "second-section": 1,
+      "third-section": 2,
+      "fourth-section": 3,
+      "fifth-section": 4
+    };
+
     this.defaults = defaults;
+    this.numberToId = numberToId;
+    this.idToNumber = idToNumber;
+
     /**
      * Init build
      */
@@ -43,8 +69,13 @@
     this.buildPublicFunctions().buildSections().buildDots().addEvents();
 
     var anchor = location.hash.replace("#", "").split("/")[0];
-    location.hash = 0;
-    this.changeCurrentPosition(anchor);
+    location.hash = "first-section";
+    if (typeof anchor === "undefined") {
+      this.changeCurrentPosition(this.idToNumber[anchor]);
+    } else {
+      this.changeCurrentPosition(0);
+    }
+
     this.registerIeTags();
   };
 
@@ -81,7 +112,7 @@
       var li = document.createElement("li");
       var a = document.createElement("a");
 
-      a.setAttribute("href", "#" + i);
+      a.setAttribute("href", "#" + this.numberToId[i]);
       li.appendChild(a);
       _self.ul.appendChild(li);
     }
@@ -174,6 +205,7 @@
       if (location) {
         var anchor = location.hash.replace("#", "").split("/")[0];
         if (anchor !== "") {
+          anchor = _self.idToNumber[anchor];
           if (anchor < 0) {
             _self.changeCurrentPosition(0);
           } else if (anchor > _self.defaults.maxPosition) {
@@ -204,7 +236,7 @@
 
       setTimeout(function () {
         _self.addEvents();
-      }, 600);
+      }, 300);
     };
 
     this.animateScroll = function () {
@@ -212,14 +244,6 @@
       var animateFunction = this.defaults.animateFunction;
       var position = this.defaults.currentPosition * 100;
 
-      this.defaults.container.style.webkitTransform =
-        "translateY(-" + position + "%)";
-      this.defaults.container.style.mozTransform =
-        "translateY(-" + position + "%)";
-      this.defaults.container.style.msTransform =
-        "translateY(-" + position + "%)";
-      this.defaults.container.style.transform =
-        "translateY(-" + position + "%)";
       this.defaults.container.style.webkitTransition =
         "all " + animateTime + "s " + animateFunction;
       this.defaults.container.style.mozTransition =
@@ -228,6 +252,14 @@
         "all " + animateTime + "s " + animateFunction;
       this.defaults.container.style.transition =
         "all " + animateTime + "s " + animateFunction;
+      this.defaults.container.style.webkitTransform =
+        "translateY(-" + position + "%)";
+      this.defaults.container.style.mozTransform =
+        "translateY(-" + position + "%)";
+      this.defaults.container.style.msTransform =
+        "translateY(-" + position + "%)";
+      this.defaults.container.style.transform =
+        "translateY(-" + position + "%)";
 
       for (var i = 0; i < this.ul.childNodes.length; i++) {
         this.ul.childNodes[i].firstChild.className = this.updateClass(
@@ -247,8 +279,13 @@
 
     this.changeCurrentPosition = function (position) {
       if (position !== "") {
-        _self.defaults.currentPosition = position;
-        location.hash = _self.defaults.currentPosition;
+        if (position >= 0) {
+          _self.defaults.currentPosition = position;
+          location.hash = this.numberToId[_self.defaults.currentPosition];
+        } else {
+          _self.defaults.currentPosition = 0;
+          location.hash = this.numberToId[0];
+        }
       }
     };
 
