@@ -37,13 +37,14 @@
 
 @font-face {
   font-family: 'custom';
-  src: url('../fonts/JosefinSans-Light.ttf')
+  src: url('../fonts/JosefinSans-Thin.ttf')
 }
 
 .section {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .section > div > h1 {

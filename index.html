@@ -4,15 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ORMEE</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./css/full-page-scroll.min.css"
-    />
+    <link rel="stylesheet" type="text/css" href="./css/full-page-scroll.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css" />
   </head>
   <body>
-    <canvas id="bkg-gradient"></canvas>
     <div id="main" class="scroll-container">
       <section class="section">
         <div>
@@ -20,6 +15,7 @@
         </div>
       </section>
       <section class="section">
+        <canvas id="bkg-gradient"></canvas>
         <div>
           <h1>Section 2</h1>
         </div>
@@ -31,17 +27,8 @@
       </section>
     </div>
 
+    <script src="./js/full-page-scroll.js"></script>
     <script src="./js/granim.min.js"></script>
     <script src="./js/index.js"></script>
-    <script src="./js/full-page-scroll.js"></script>
-    <script type="text/javascript">
-      new fullScroll({
-        mainElement: "main",
-        displayDots: true,
-        dotsPosition: "left",
-        animateTime: 0.7,
-        animateFunction: "ease"
-      });
-    </script>
   </body>
 </html>

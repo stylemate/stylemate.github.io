@@ -37,7 +37,7 @@
     };
 
     var numberToId = {
-      0: "first-section",
+      0: "top",
       1: "second-section",
       2: "third-section",
       3: "fourth-section",
@@ -45,7 +45,7 @@
     };
 
     var idToNumber = {
-      "first-section": 0,
+      top: 0,
       "second-section": 1,
       "third-section": 2,
       "fourth-section": 3,
@@ -69,7 +69,7 @@
     this.buildPublicFunctions().buildSections().buildDots().addEvents();
 
     var anchor = location.hash.replace("#", "").split("/")[0];
-    location.hash = "first-section";
+    location.hash = "top";
     if (typeof anchor === "undefined") {
       this.changeCurrentPosition(this.idToNumber[anchor]);
     } else {
@@ -96,7 +96,9 @@
    * @return {Object} this (fullScroll)
    */
   fullScroll.prototype.buildDots = function () {
+    this.nav = document.createElement("nav");
     this.ul = document.createElement("ul");
+    this.nav.appendChild(this.ul);
 
     this.ul.className = this.updateClass(1, "dots", this.ul.className);
     this.ul.className = this.updateClass(
@@ -124,7 +126,7 @@
     );
 
     if (this.defaults.displayDots) {
-      document.body.appendChild(this.ul);
+      document.body.appendChild(this.nav);
     }
 
     return this;
@@ -295,7 +297,9 @@
 
     this.updateClass = function (type, newClass, currentClass) {
       if (type == 1) {
-        return (currentClass += " " + newClass);
+        if (currentClass.trim() === "") {
+          return newClass;
+        } else return (currentClass += " " + newClass);
       } else if (type == 2) {
         return currentClass.replace(newClass, "");
       }
