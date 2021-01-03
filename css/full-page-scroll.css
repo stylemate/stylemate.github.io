@@ -1,80 +1,135 @@
-body, html {
-	margin: 0;
-	padding: 0;
-	width: 100%;
+body,
+html {
+	display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 	height: 100%;
-	overflow: hidden;
+	min-height: 100vh;
+  overflow: hidden;
 }
 
 .scroll-container {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	margin: 0;
-	padding: 0;
+	left: 100px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .scroll-container section {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
-.dots {	
-	z-index: 1;
-	list-style: none;
-	padding: 0;
-	position: absolute;	
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+@font-face {
+  font-family: "jsregular";
+  src: url("../fonts/JosefinSans-Regular.ttf");
 }
 
-.dots li a {
-	padding: 10px;
-	width: 4px;
-	height: 5px;
-	display: block;
-}
-
-.dots li a:before {
-	content: '';
+.navbar {
+	width: 100px;
 	position: absolute;
-	width: 8px;
-	height: 8px;
-	background: rgba(0, 0, 0, 0.48);
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	border-radius: 10px;	
-	-webkit-transition: -webkit-transform 0.3s ease, background-color 0.3s ease;
-	-moz-transition: -moz-transform 0.3s ease, background-color 0.3s ease;
-	-ms-transition: -ms-transform 0.3s ease, background-color 0.3s ease;
-	-o-transition: -o-transform 0.3s ease, background-color 0.3s ease;
-	transition: transform 0.3s ease, background-color 0.3s ease;
+	top: 50%;
 }
 
-.dots li a.active:before {
-	content: '';
-	background-color: black;
-	width: 14px;
-	height: 14px;
-	margin-top: -4px;
-	left: 7px; 
-	-webkit-transform: scale(1.0);
-	-moz-transform: scale(1.0);
-	-ms-transform: scale(1.0);
-	-o-transform: scale(1.0);
-	transform: scale(1.0);
+.items {
+  z-index: 1;
+  list-style: none;
+  padding: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
-.dots-right {
-	right: 10px;
+.items li {
+  position: relative;
+  margin: 1em 0;
 }
 
-.dots-left {
-	left: 10px;
+.items li a {
+  color: #222;
+  text-decoration: none;
+  font-family: jsregular;
+  font-size: 1.5em;
+}
+
+.items li a.active {
+	color: black;
+	font-weight: bold;
+	-webkit-transition: -webkit-transform 0.4s ease, color 0.4s, font-weight 0.4s;
+  -moz-transition: -moz-transform 0.4s ease, color 0.4s, font-weight 0.4s;
+  -ms-transition: -ms-transform 0.4s ease, color 0.4s, font-weight 0.4s;
+  -o-transition: -o-transform 0.4s ease, color 0.4s, font-weight 0.4s;
+  transition: transform 0.4s ease, color 0.4s, font-weight 0.4s;
+}
+
+.items li a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: black;
+  left: 0;
+  bottom: 0;
+}
+
+.items li a.active::after {
+	height: 2px;
+	-webkit-transition: height 0.4s ease;
+  -moz-transition: height 0.4s ease;
+  -ms-transition: height 0.4s ease;
+  -o-transition: height 0.4s ease;
+  transition: height 0.4s ease;
+}
+
+/*
+.items li a {
+  padding: 10px;
+  width: 4px;
+  height: 5px;
+  display: block;
+}
+
+.items li a:before {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.48);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-transition: -webkit-transform 0.3s ease, background-color 0.3s ease;
+  -moz-transition: -moz-transform 0.3s ease, background-color 0.3s ease;
+  -ms-transition: -ms-transform 0.3s ease, background-color 0.3s ease;
+  -o-transition: -o-transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.items li a.active:before {
+  content: "";
+  background-color: black;
+  width: 14px;
+  height: 14px;
+  margin-top: -4px;
+  left: 7px;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}*/
+
+.items-right {
+  right: 10px;
+}
+
+.items-left {
+  left: 10px;
 }

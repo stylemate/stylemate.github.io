@@ -31,9 +31,10 @@
       animateFunction: params.animateFunction || "ease",
       maxPosition: sections.length - 1,
       currentPosition: 0,
-      displayDots:
-        typeof params.displayDots != "undefined" ? params.displayDots : true,
-      dotsPosition: params.dotsPosition || "left"
+      displayNavbar:
+        typeof params.displayNavbar != "undefined"
+          ? params.displayNavbar
+          : true,
     };
 
     var numberToId = {
@@ -66,7 +67,7 @@
    * Init plugin
    */
   fullScroll.prototype.init = function () {
-    this.buildPublicFunctions().buildSections().buildDots().addEvents();
+    this.buildPublicFunctions().buildSections().buildNavbar().addEvents();
 
     var anchor = location.hash.replace("#", "").split("/")[0];
     location.hash = "top";
@@ -95,17 +96,13 @@
    * Build dots navigation
    * @return {Object} this (fullScroll)
    */
-  fullScroll.prototype.buildDots = function () {
+  fullScroll.prototype.buildNavbar = function () {
     this.nav = document.createElement("nav");
     this.ul = document.createElement("ul");
     this.nav.appendChild(this.ul);
 
-    this.ul.className = this.updateClass(1, "dots", this.ul.className);
-    this.ul.className = this.updateClass(
-      1,
-      this.defaults.dotsPosition == "right" ? "dots-right" : "dots-left",
-      this.ul.className
-    );
+		this.nav.className = "navbar"
+    this.ul.className = this.updateClass("concat", "items", this.ul.className);
 
     var _self = this;
     var sections = this.defaults.sections;
@@ -120,12 +117,17 @@
     }
 
     this.ul.childNodes[0].firstChild.className = this.updateClass(
-      1,
+      "concat",
       "active",
       this.ul.childNodes[0].firstChild.className
     );
 
-    if (this.defaults.displayDots) {
+    console.log(this.ul.childNodes[0].firstChild.innerHTML);
+    this.ul.childNodes[0].firstChild.innerHTML = "Section 1";
+    this.ul.childNodes[1].firstChild.innerHTML = "Section 2";
+    this.ul.childNodes[2].firstChild.innerHTML = "Section 3";
+
+    if (this.defaults.displayNavbar) {
       document.body.appendChild(this.nav);
     }
 
@@ -176,6 +178,7 @@
     var _self = this;
 
     this.mouseWheelAndKey = function (event) {
+      if (event.target.className == "scroll-box") return;
       if (event.deltaY > 0 || event.keyCode == 40) {
         _self.defaults.currentPosition++;
         _self.changeCurrentPosition(_self.defaults.currentPosition);
@@ -187,11 +190,13 @@
     };
 
     this.touchStart = function (event) {
+			if (event.target.className == "scroll-box") return;
       mTouchStart = parseInt(event.changedTouches[0].clientY);
       mTouchEnd = 0;
     };
 
     this.touchEnd = function (event) {
+			if (event.target.className == "scroll-box") return;
       mTouchEnd = parseInt(event.changedTouches[0].clientY);
       if (mTouchEnd - mTouchStart > 100 || mTouchStart - mTouchEnd > 100) {
         if (mTouchEnd > mTouchStart) {
@@ -265,13 +270,13 @@
 
       for (var i = 0; i < this.ul.childNodes.length; i++) {
         this.ul.childNodes[i].firstChild.className = this.updateClass(
-          2,
+          "remove",
           "active",
           this.ul.childNodes[i].firstChild.className
         );
         if (i == this.defaults.currentPosition) {
           this.ul.childNodes[i].firstChild.className = this.updateClass(
-            1,
+            "concat",
             "active",
             this.ul.childNodes[i].firstChild.className
           );
@@ -296,11 +301,11 @@
     };
 
     this.updateClass = function (type, newClass, currentClass) {
-      if (type == 1) {
+      if (type == "concat") {
         if (currentClass.trim() === "") {
           return newClass;
         } else return (currentClass += " " + newClass);
-      } else if (type == 2) {
+      } else if (type == "remove") {
         return currentClass.replace(newClass, "");
       }
     };
